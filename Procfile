@@ -1,0 +1,1 @@
+web: gunicorn agrizone.wsgi --log-file -
