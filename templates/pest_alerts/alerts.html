@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}Smart Pest & Disease Alert System - Agrizone{% endblock %}
+
+{% block content %}
+<div class="section-modern">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <div class="badge bg-danger text-white mb-4 px-4 py-2 rounded-pill" style="font-size: 1.1rem;">
+                        <i class="fas fa-shield-alt me-2"></i>Real-Time Protection System
+                    </div>
+                    <h1 class="display-3 fw-bold gradient-text mb-4">Pest & Disease Alert Center</h1>
+                    <p class="lead text-muted fs-4 mx-auto" style="max-width: 700px;">Advanced early warning system that monitors weather patterns and crop conditions to predict and prevent pest outbreaks</p>
+                </div>
+                
+                <div class="card-enhanced border-0 shadow-lg mb-5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-8">
+                                <h3 class="fw-bold gradient-text mb-3"><i class="fas fa-radar me-3"></i>Threat Detection Scanner</h3>
+                                <p class="text-muted mb-0">Enter your crop and location details for personalized pest and disease risk assessment</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="icon-modern">
+                                    <i class="fas fa-bug"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form id="alertForm">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label for="crop" class="form-label fw-semibold">Select Crop Type</label>
+                                    <select class="form-control-modern" id="crop" required style="font-size: 1.1rem;">
+                                        <option value="">Choose your crop...</option>
+                                        <option value="rice">🌾 Rice</option>
+                                        <option value="wheat">🌾 Wheat</option>
+                                        <option value="maize">🌽 Maize (Corn)</option>
+                                        <option value="cotton">🌿 Cotton</option>
+                                        <option value="tomato">🍅 Tomato</option>
+                                        <option value="potato">🥔 Potato</option>
+                                        <option value="sugarcane">🎋 Sugarcane</option>
+                                    </select>
+                                    <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Select the primary crop in your field</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="location" class="form-label fw-semibold">Farm Location</label>
+                                    <input type="text" class="form-control-modern" id="location" placeholder="Enter city or region name" required style="font-size: 1.1rem;">
+                                    <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Weather data will be analyzed for this location</small>
+                                </div>
+                            </div>
+                            <div class="text-center mt-5">
+                                <button type="submit" class="btn btn-modern btn-lg px-5 py-3" style="background: linear-gradient(135deg, #dc3545, #c82333); font-size: 1.2rem;">
+                                    <i class="fas fa-search me-3"></i>Scan for Threats
+                                </button>
+                                <div class="mt-3">
+                                    <small class="text-muted"><i class="fas fa-clock me-1"></i>Real-time analysis powered by weather data</small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="alertsSection" style="display: none;">
+                    <div class="d-flex align-items-center justify-content-between mb-4" data-aos="fade-up">
+                        <h3 class="fw-bold gradient-text mb-0"><i class="fas fa-exclamation-triangle me-3"></i>Active Threat Alerts</h3>
+                        <div class="badge bg-danger text-white px-3 py-2 rounded-pill">
+                            <i class="fas fa-clock me-2"></i>Live Updates
+                        </div>
+                    </div>
+                    <div id="alertsContent"></div>
+                </div>
+
+                <div id="noAlerts" class="card-enhanced border-0 shadow-lg" style="display: none;" data-aos="fade-up">
+                    <div class="card-body text-center p-5">
+                        <div class="icon-modern mb-4" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <h3 class="fw-bold gradient-text mb-3">All Clear!</h3>
+                        <p class="lead text-muted mb-4">Current weather conditions are favorable for your crops. No immediate pest or disease threats detected in your area.</p>
+                        <div class="row g-3 mt-4">
+                            <div class="col-md-4">
+                                <div class="card-glass p-3 rounded-4">
+                                    <i class="fas fa-thermometer-half text-success fs-3 mb-2"></i>
+                                    <div class="fw-bold">Optimal</div>
+                                    <small class="text-muted">Temperature</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-glass p-3 rounded-4">
+                                    <i class="fas fa-tint text-info fs-3 mb-2"></i>
+                                    <div class="fw-bold">Balanced</div>
+                                    <small class="text-muted">Humidity</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-glass p-3 rounded-4">
+                                    <i class="fas fa-leaf text-success fs-3 mb-2"></i>
+                                    <div class="fw-bold">Healthy</div>
+                                    <small class="text-muted">Crop Status</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alert System Features -->
+                <div class="row mt-5" data-aos="fade-up">
+                    <div class="col-12">
+                        <div class="card-enhanced border-0 shadow-lg">
+                            <div class="card-body p-5">
+                                <h3 class="fw-bold gradient-text text-center mb-5"><i class="fas fa-shield-virus me-3"></i>Advanced Protection Features</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-satellite"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Weather Monitoring</h5>
+                                        <p class="text-muted">Real-time weather analysis to predict pest-favorable conditions</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Risk Assessment</h5>
+                                        <p class="text-muted">AI-powered risk scoring based on multiple environmental factors</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Early Warnings</h5>
+                                        <p class="text-muted">Proactive alerts before pest outbreaks become critical</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-prescription-bottle"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Treatment Plans</h5>
+                                        <p class="text-muted">Detailed prevention and treatment recommendations</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('alertForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const crop = document.getElementById('crop').value;
+    const location = document.getElementById('location').value;
+    
+    try {
+        const response = await fetch(`{% url 'pest_alerts:get_alerts' %}?crop=${crop}&location=${location}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            // Show alerts
+            if (data.alerts.length > 0) {
+                const alertsSection = document.getElementById('alertsSection');
+                const alertsContent = document.getElementById('alertsContent');
+                
+                alertsContent.innerHTML = data.alerts.map((alert, index) => `
+                    <div class="card-enhanced border-0 shadow-lg mb-4" data-aos="fade-up" data-aos-delay="${index * 100}">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-modern me-3" style="background: linear-gradient(135deg, #dc3545, #c82333); width: 60px; height: 60px;">
+                                            <i class="fas fa-${alert.pest_name ? 'bug' : 'virus'}"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="fw-bold gradient-text mb-1">${alert.pest_name || alert.disease_name}</h4>
+                                            <p class="text-muted mb-0">Detected threat requiring immediate attention</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <span class="badge bg-${getSeverityColor(alert.severity)} px-4 py-2 rounded-pill" style="font-size: 1rem;">
+                                        <i class="fas fa-${getSeverityIcon(alert.severity)} me-2"></i>${alert.severity.toUpperCase()}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="card-glass p-4 rounded-4 h-100">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                <i class="fas fa-stethoscope text-white"></i>
+                                            </div>
+                                            <h6 class="fw-bold mb-0">Symptoms</h6>
+                                        </div>
+                                        <p class="text-muted mb-0">${alert.symptoms}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-glass p-4 rounded-4 h-100">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                <i class="fas fa-shield-alt text-white"></i>
+                                            </div>
+                                            <h6 class="fw-bold mb-0">Prevention</h6>
+                                        </div>
+                                        <p class="text-muted mb-0">${alert.prevention}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-glass p-4 rounded-4 h-100">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                <i class="fas fa-medkit text-white"></i>
+                                            </div>
+                                            <h6 class="fw-bold mb-0">Treatment</h6>
+                                        </div>
+                                        <p class="text-muted mb-0">${alert.treatment}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-3 rounded-4" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(200, 35, 51, 0.1)); border-left: 4px solid #dc3545;">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-circle text-danger me-2"></i>
+                                    <small class="fw-medium text-danger">Immediate action recommended to prevent crop damage</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                alertsSection.style.display = 'block';
+                document.getElementById('noAlerts').style.display = 'none';
+            } else {
+                document.getElementById('alertsSection').style.display = 'none';
+                document.getElementById('noAlerts').style.display = 'block';
+            }
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    }
+});
+
+function getSeverityColor(severity) {
+    const colors = {
+        'low': 'info',
+        'medium': 'warning',
+        'high': 'danger',
+        'critical': 'dark'
+    };
+    return colors[severity] || 'secondary';
+}
+
+function getSeverityIcon(severity) {
+    const icons = {
+        'low': 'info-circle',
+        'medium': 'exclamation-triangle',
+        'high': 'exclamation-circle',
+        'critical': 'skull-crossbones'
+    };
+    return icons[severity] || 'question-circle';
+}
+</script>
+{% endblock %}

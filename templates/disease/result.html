@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Disease Detection Result - Agrizone{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold">Disease Detection Result</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Uploaded Image</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="{{ image_url }}" alt="Uploaded plant image" class="img-fluid rounded" style="max-height: 400px;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Analysis Result</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h4 class="text-primary">
+                                    <i class="fas fa-diagnoses me-2"></i>{{ detection.predicted_disease }}
+                                </h4>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ detection.confidence|floatformat:0 }}%">
+                                        {{ detection.confidence|floatformat:1 }}% Confidence
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5><i class="fas fa-prescription-bottle-alt me-2"></i>Treatment Recommendation</h5>
+                                <div class="p-3 bg-light rounded">
+                                    <p class="mb-0">{{ detection.treatment_suggestion }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-clock me-1"></i>
+                                    Analyzed on {{ detection.created_at|date:"M d, Y H:i" }}
+                                </small>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'disease:disease_home' %}" class="btn btn-primary">
+                                    <i class="fas fa-camera me-2"></i>Analyze Another Image
+                                </a>
+                                <a href="{% url 'chatbot:chat_home' %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-comments me-2"></i>Ask AI Assistant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>Important Note</h5>
+                        <p class="mb-0">This AI diagnosis is for reference only. For severe infections or uncertain cases, please consult with a local agricultural expert or extension officer for professional advice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

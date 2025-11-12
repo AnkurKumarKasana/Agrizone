@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+
+{% block title %}Smart Weather Intelligence - Agrizone{% endblock %}
+
+{% block content %}
+<div class="section-modern">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <div class="badge bg-info text-white mb-4 px-4 py-2 rounded-pill" style="font-size: 1.1rem;">
+                        <i class="fas fa-satellite me-2"></i>Real-Time Weather Intelligence
+                    </div>
+                    <h1 class="display-3 fw-bold gradient-text mb-4">Agricultural Weather Forecast</h1>
+                    <p class="lead text-muted fs-4 mx-auto" style="max-width: 700px;">Get comprehensive weather insights tailored for farming decisions with real-time data and agricultural analysis</p>
+                </div>
+                
+                <div class="card-enhanced border-0 shadow-lg mb-5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h3 class="fw-bold gradient-text mb-3"><i class="fas fa-map-marker-alt me-3"></i>Location Weather Analysis</h3>
+                                <p class="text-muted mb-0">Enter your location to get detailed weather conditions and farming recommendations</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="icon-modern">
+                                    <i class="fas fa-cloud-sun"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form id="weatherForm" class="mt-4">
+                            {% csrf_token %}
+                            <div class="row g-4 align-items-end">
+                                <div class="col-md-8">
+                                    <label for="city" class="form-label fw-semibold">City or Location</label>
+                                    <input type="text" class="form-control-modern" id="city" name="city" placeholder="Enter city name (e.g., New York, London, Mumbai)" required style="font-size: 1.1rem;">
+                                    <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Enter any city worldwide for accurate weather data</small>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-modern w-100 py-3" style="font-size: 1.1rem;">
+                                        <i class="fas fa-search me-2"></i>Get Weather Intel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+                <!-- Weather Result -->
+                <div id="weatherResult" class="card-enhanced border-0 shadow-lg" style="display: none;" data-aos="fade-up">
+                    <div class="card-body p-5">
+                        <div id="weatherContent"></div>
+                    </div>
+                </div>
+                
+                <!-- Weather Features Section -->
+                <div class="row mt-5" data-aos="fade-up">
+                    <div class="col-12">
+                        <div class="card-enhanced border-0 shadow-lg">
+                            <div class="card-body p-5">
+                                <h3 class="fw-bold gradient-text text-center mb-5"><i class="fas fa-weather-sun me-3"></i>Comprehensive Weather Intelligence</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-thermometer-half"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Temperature Analysis</h5>
+                                        <p class="text-muted">Real-time temperature with feels-like conditions and farming impact assessment</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-tint"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Humidity & Moisture</h5>
+                                        <p class="text-muted">Humidity levels with irrigation recommendations and disease risk analysis</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-wind"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Wind Conditions</h5>
+                                        <p class="text-muted">Wind speed and direction for optimal spraying and field operation timing</p>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="icon-modern mb-3">
+                                            <i class="fas fa-seedling"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-3">Farming Insights</h5>
+                                        <p class="text-muted">AI-powered agricultural recommendations based on current weather patterns</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('weatherForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('{% url "weather:get_weather" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        const weatherResult = document.getElementById('weatherResult');
+        const weatherContent = document.getElementById('weatherContent');
+        
+        if (result.success) {
+            weatherContent.innerHTML = `
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6 text-center">
+                        <div class="card-glass p-4 rounded-4">
+                            <h2 class="fw-bold gradient-text mb-3">${result.city}, ${result.country}</h2>
+                            <img src="https://openweathermap.org/img/wn/${result.icon}@4x.png" alt="Weather Icon" class="mb-3" style="width: 120px; height: 120px;">
+                            <h3 class="text-capitalize fw-bold text-primary mb-2">${result.description}</h3>
+                            <div class="display-4 fw-bold gradient-text">${result.temperature}°C</div>
+                            <p class="text-muted">Feels like ${result.feels_like || result.temperature}°C</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-glass p-4 rounded-4">
+                            <h4 class="fw-bold mb-4"><i class="fas fa-tractor me-2"></i>Farming Conditions</h4>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Field Work Suitability</span>
+                                    <span class="badge ${result.temperature >= 15 && result.temperature <= 30 ? 'bg-success' : result.temperature < 15 ? 'bg-warning' : 'bg-danger'} rounded-pill">
+                                        ${result.temperature >= 15 && result.temperature <= 30 ? 'Excellent' : result.temperature < 15 ? 'Fair' : 'Caution'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Irrigation Need</span>
+                                    <span class="badge ${result.humidity >= 40 && result.humidity <= 70 ? 'bg-success' : result.humidity < 40 ? 'bg-warning' : 'bg-info'} rounded-pill">
+                                        ${result.humidity >= 40 && result.humidity <= 70 ? 'Optimal' : result.humidity < 40 ? 'High' : 'Low'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Spray Conditions</span>
+                                    <span class="badge ${result.wind_speed <= 5 ? 'bg-success' : result.wind_speed <= 10 ? 'bg-warning' : 'bg-danger'} rounded-pill">
+                                        ${result.wind_speed <= 5 ? 'Perfect' : result.wind_speed <= 10 ? 'Moderate' : 'Poor'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="stats-card text-center">
+                            <div class="icon-modern mb-3">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                            <h3 class="fw-bold gradient-text">${result.temperature}°C</h3>
+                            <p class="fw-medium text-muted mb-2">Temperature</p>
+                            <small class="text-muted">Feels like ${result.feels_like || result.temperature}°C</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="stats-card text-center">
+                            <div class="icon-modern mb-3">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <h3 class="fw-bold gradient-text">${result.humidity}%</h3>
+                            <p class="fw-medium text-muted mb-2">Humidity</p>
+                            <small class="text-muted">Dewpoint ${result.dewpoint || 'N/A'}°C</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="stats-card text-center">
+                            <div class="icon-modern mb-3">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <h3 class="fw-bold gradient-text">${result.wind_speed} m/s</h3>
+                            <p class="fw-medium text-muted mb-2">Wind Speed</p>
+                            <small class="text-muted">${result.wind_direction || 'Variable'} direction</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="stats-card text-center">
+                            <div class="icon-modern mb-3">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h3 class="fw-bold gradient-text">${result.uv_index || 'N/A'}</h3>
+                            <p class="fw-medium text-muted mb-2">UV Index</p>
+                            <small class="text-muted">${(result.uv_index || 0) > 6 ? 'High' : (result.uv_index || 0) > 3 ? 'Moderate' : 'Low'} exposure</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-glass p-4 rounded-4 text-center h-100">
+                            <i class="fas fa-eye text-secondary fs-2 mb-3"></i>
+                            <h4 class="fw-bold gradient-text">${result.visibility} km</h4>
+                            <p class="mb-0 text-muted fw-medium">Visibility</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-glass p-4 rounded-4 text-center h-100">
+                            <i class="fas fa-tachometer-alt text-info fs-2 mb-3"></i>
+                            <h4 class="fw-bold gradient-text">${result.pressure} mb</h4>
+                            <p class="mb-0 text-muted fw-medium">Pressure</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-glass p-4 rounded-4 text-center h-100">
+                            <i class="fas fa-cloud text-primary fs-2 mb-3"></i>
+                            <h4 class="fw-bold gradient-text">${result.cloud_cover || 0}%</h4>
+                            <p class="mb-0 text-muted fw-medium">Cloud Cover</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-glass p-4 rounded-4 text-center h-100">
+                            <i class="fas fa-cloud-rain text-success fs-2 mb-3"></i>
+                            <h4 class="fw-bold gradient-text">${result.precipitation || 0} mm</h4>
+                            <p class="mb-0 text-muted fw-medium">Precipitation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-4 rounded-4 glass-effect" style="background: linear-gradient(135deg, var(--success-color), var(--secondary-color)); color: white;">
+                    <h5 class="fw-bold"><i class="fas fa-seedling me-2"></i>Agricultural Weather Analysis</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-2"><i class="fas fa-tractor me-2"></i>Field Work Conditions</h6>
+                            <p class="mb-2 opacity-90">
+                                ${result.temperature >= 15 && result.temperature <= 30 ? '✅ Ideal temperature for field operations' : result.temperature < 15 ? '❄️ Cool conditions - consider timing of activities' : '🌡️ Hot conditions - work during cooler hours'}
+                            </p>
+                            <p class="mb-2 opacity-90">
+                                ${result.humidity >= 40 && result.humidity <= 70 ? '✅ Optimal humidity for crop growth' : result.humidity < 40 ? '💧 Low humidity - increase irrigation' : '🌫️ High humidity - monitor for diseases'}
+                            </p>
+                            <p class="mb-0 opacity-90">
+                                ${result.wind_speed <= 5 ? '✅ Calm conditions - good for spraying' : result.wind_speed <= 10 ? '🌬️ Moderate wind - adjust spray timing' : '💨 Strong wind - avoid spraying operations'}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-2"><i class="fas fa-leaf me-2"></i>Crop Care Recommendations</h6>
+                            <p class="mb-2 opacity-90">
+                                ${(result.uv_index || 0) > 6 ? '☀️ High UV - protect sensitive crops' : '🌤️ Moderate UV - good for photosynthesis'}
+                            </p>
+                            <p class="mb-2 opacity-90">
+                                ${(result.precipitation || 0) > 0 ? '🌧️ Recent rainfall - check soil moisture' : '☀️ No precipitation - monitor irrigation needs'}
+                            </p>
+                            <p class="mb-0 opacity-90">
+                                ${result.pressure > 1013 ? '📈 High pressure - stable weather expected' : '📉 Low pressure - weather changes possible'}
+                            </p>
+                        </div>
+                    </div>
+                    ${result.demo ? '<small class="d-block mt-3 opacity-75"><i class="fas fa-info-circle me-1"></i>Demo data - Get a valid API key for real weather</small>' : ''}
+                </div>
+            `;
+        } else {
+            weatherContent.innerHTML = `
+                <div class="text-center text-danger">
+                    <i class="fas fa-exclamation-triangle mb-3" style="font-size: 3rem;"></i>
+                    <h3>Error</h3>
+                    <p>${result.error}</p>
+                </div>
+            `;
+        }
+        
+        weatherResult.style.display = 'block';
+        weatherResult.scrollIntoView({ behavior: 'smooth' });
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    }
+});
+</script>
+{% endblock %}

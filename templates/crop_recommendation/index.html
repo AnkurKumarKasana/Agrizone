@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block title %}Agrizone - Smart Farming Solutions{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-modern" style="background: var(--gradient-primary); color: white; position: relative;">
+    <div id="particles-js" style="position: absolute; width: 100%; height: 100%; z-index: 1;"></div>
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                <div class="badge bg-light text-success mb-4 px-4 py-2 rounded-pill animate-fade-scale" style="font-size: 1rem; font-weight: 600;">
+                    <i class="fas fa-leaf me-2"></i>AI-Powered Agriculture Platform
+                </div>
+                <h1 class="display-2 fw-bold mb-4 animate-slide-up" style="text-shadow: 0 4px 20px rgba(0,0,0,0.3); line-height: 1.1;">
+                    Crop Advisory and <span style="color: #81C784; text-shadow: 0 0 30px rgba(129, 199, 132, 0.5);">Farmer's Companion</span>
+                </h1>
+                <p class="lead mb-5 fs-4 opacity-90 animate-slide-up" style="text-shadow: 0 2px 8px rgba(0,0,0,0.2); animation-delay: 0.2s;">
+                    Transform your agricultural practices with cutting-edge AI technology. Get personalized crop recommendations, 
+                    real-time weather insights, disease detection, and expert guidance.
+                </p>
+                <div class="d-flex flex-wrap gap-4 mb-5 animate-slide-up" style="animation-delay: 0.4s;">
+                    <a href="{% url 'crop_recommendation:recommend' %}" class="btn btn-light btn-lg px-5 py-3 shadow-lg" style="border-radius: 50px; font-weight: 700; font-size: 1.1rem;">
+                        <i class="fas fa-seedling me-2"></i>Start Farming Smart
+                    </a>
+                    <a href="{% url 'crop_recommendation:about' %}" class="btn btn-outline-light btn-lg px-5 py-3 card-glass" style="border-radius: 50px; font-weight: 600; font-size: 1.1rem;">
+                        <i class="fas fa-play me-2"></i>Watch Demo
+                    </a>
+                </div>
+                <div class="d-flex align-items-center gap-4 animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 12px; height: 12px;"></div>
+                        <small class="opacity-90">10,000+ Active Farmers</small>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 12px; height: 12px;"></div>
+                        <small class="opacity-90">95% Accuracy Rate</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="text-center position-relative">
+                    <div class="card-glass rounded-circle mx-auto mb-4 floating" style="width: 400px; height: 400px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-tractor" style="font-size: 10rem; opacity: 0.9; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));"></i>
+                    </div>
+                    <div class="position-absolute top-0 start-0 w-100 h-100">
+                        <div class="position-absolute" style="top: 15%; left: 5%; animation: floating 3s ease-in-out infinite;">
+                            <div class="bg-success rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);">
+                                <i class="fas fa-leaf text-white" style="font-size: 1.5rem;"></i>
+                            </div>
+                        </div>
+                        <div class="position-absolute" style="top: 60%; right: 10%; animation: floating 2.5s ease-in-out infinite; animation-delay: 0.5s;">
+                            <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);">
+                                <i class="fas fa-seedling text-white" style="font-size: 1.2rem;"></i>
+                            </div>
+                        </div>
+                        <div class="position-absolute" style="top: 5%; right: 15%; animation: floating 3.5s ease-in-out infinite; animation-delay: 1s;">
+                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center" style="width: 55px; height: 55px; box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);">
+                                <i class="fas fa-sun text-white" style="font-size: 1.3rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="section-modern">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-success text-white mb-3 px-4 py-2 rounded-pill" style="font-size: 1rem;">
+                <i class="fas fa-star me-2"></i>Premium Features
+            </div>
+            <h2 class="display-4 fw-bold gradient-text mb-4">Revolutionary AI Tools</h2>
+            <p class="lead text-muted fs-5 mx-auto" style="max-width: 600px;">Comprehensive suite of intelligent farming solutions designed to maximize your agricultural success</p>
+        </div>
+        
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card-modern text-center">
+                    <div class="icon-modern">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3 gradient-text">Smart Crop Recommendation</h5>
+                    <p class="text-muted mb-4">Advanced ML algorithms analyze soil composition, climate data, and historical patterns to suggest optimal crops with 95% accuracy.</p>
+                    <a href="{% url 'crop_recommendation:recommend' %}" class="btn btn-modern">
+                        <i class="fas fa-magic me-2"></i>Get Recommendations
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card-modern text-center">
+                    <div class="icon-modern">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3 gradient-text">Real-Time Weather Intelligence</h5>
+                    <p class="text-muted mb-4">Precision weather forecasting with agricultural insights, helping you make informed decisions about irrigation and harvesting.</p>
+                    <a href="{% url 'weather:weather_home' %}" class="btn btn-modern">
+                        <i class="fas fa-satellite me-2"></i>View Weather
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card-modern text-center">
+                    <div class="icon-modern">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3 gradient-text">AI Disease Detection</h5>
+                    <p class="text-muted mb-4">Computer vision technology instantly identifies plant diseases from photos and provides targeted treatment recommendations.</p>
+                    <a href="{% url 'disease:disease_home' %}" class="btn btn-modern">
+                        <i class="fas fa-camera me-2"></i>Scan Plants
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-card-modern text-center">
+                    <div class="icon-modern">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3 gradient-text">Expert AI Assistant</h5>
+                    <p class="text-muted mb-4">24/7 intelligent farming companion providing personalized advice, answering questions, and guiding your agricultural journey.</p>
+                    <a href="{% url 'chatbot:chat_home' %}" class="btn btn-modern">
+                        <i class="fas fa-comments me-2"></i>Chat Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="section-modern" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold gradient-text mb-3">Trusted by Farmers Worldwide</h2>
+            <p class="lead text-muted">Join thousands of successful farmers who have transformed their agriculture with our AI platform</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stats-card">
+                    <div class="icon-modern mb-3">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2 class="fw-bold gradient-text mb-2">10,000+</h2>
+                    <p class="text-muted fw-medium mb-0">Active Farmers</p>
+                    <small class="text-success">Growing daily</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stats-card">
+                    <div class="icon-modern mb-3">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="fw-bold gradient-text mb-2">95%</h2>
+                    <p class="text-muted fw-medium mb-0">Accuracy Rate</p>
+                    <small class="text-success">AI Predictions</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stats-card">
+                    <div class="icon-modern mb-3">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h2 class="fw-bold gradient-text mb-2">50+</h2>
+                    <p class="text-muted fw-medium mb-0">Countries</p>
+                    <small class="text-success">Global reach</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="stats-card">
+                    <div class="icon-modern mb-3">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h2 class="fw-bold gradient-text mb-2">22</h2>
+                    <p class="text-muted fw-medium mb-0">Crop Types</p>
+                    <small class="text-success">Supported</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="section-modern" style="background: var(--gradient-primary); color: white;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-4">Ready to Transform Your Farm?</h2>
+                <p class="lead mb-5 opacity-90">Join the agricultural revolution and start making data-driven farming decisions today. Our AI platform is designed to help you maximize yields, reduce costs, and farm sustainably.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-4">
+                    <a href="{% url 'crop_recommendation:recommend' %}" class="btn btn-light btn-lg px-5 py-3" style="border-radius: 50px; font-weight: 700;">
+                        <i class="fas fa-rocket me-2"></i>Start Free Trial
+                    </a>
+                    <a href="{% url 'crop_recommendation:contact' %}" class="btn btn-outline-light btn-lg px-5 py-3 card-glass" style="border-radius: 50px; font-weight: 600;">
+                        <i class="fas fa-phone me-2"></i>Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

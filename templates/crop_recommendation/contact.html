@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Agrizone{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    .contact-container {
+        background: #1a1a1a;
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+    .contact-card {
+        background: #2d2d2d;
+        border-radius: 20px;
+        border: 1px solid #404040;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .form-control-dark {
+        background: #404040;
+        border: 1px solid #555;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 16px;
+        width: 100%;
+    }
+    .form-control-dark:focus {
+        background: #404040;
+        border-color: #4CAF50;
+        color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    }
+    .form-control-dark::placeholder {
+        color: #999;
+    }
+    .btn-send {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        border: none;
+        border-radius: 50px;
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    .btn-send:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+    .contact-info {
+        background: #2d2d2d;
+        border-radius: 20px;
+        border: 1px solid #404040;
+        padding: 40px;
+    }
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #1a1a1a;
+        border-radius: 15px;
+        border-left: 4px solid #4CAF50;
+    }
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: #4CAF50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 20px;
+    }
+    .social-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 20px;
+    }
+    .social-btn.linkedin {
+        background: #0077b5;
+        color: white;
+    }
+    .social-btn.github {
+        background: #333;
+        color: white;
+    }
+    .social-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .availability-badge {
+        background: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold" style="color: #4CAF50;">Contact Us</h1>
+        </div>
+        
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="contact-card p-5">
+                    <h3 class="mb-4"><i class="fas fa-paper-plane me-3" style="color: #4CAF50;"></i>Send Us a Message</h3>
+                    
+                    <form action="https://formspree.io/f/mldoyrnb" method="POST" target="_blank">
+                        <label class="form-label"><i class="fas fa-envelope me-2" style="color: #4CAF50;"></i>Your email:</label>
+                        <input type="email" name="email" class="form-control form-control-dark mb-3" required>
+                        
+                        <label class="form-label"><i class="fas fa-comment me-2" style="color: #4CAF50;"></i>Your message:</label>
+                        <textarea name="message" class="form-control form-control-dark mb-4" rows="6" required></textarea>
+                        
+                        <input type="hidden" name="_next" value="https://formspree.io/thanks">
+                        
+                        <button type="submit" class="btn-send">
+                            <i class="fas fa-paper-plane me-2"></i>Send
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <h3 class="mb-4"><i class="fas fa-address-book me-3" style="color: #4CAF50;"></i>Connect With Me</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Email</h5>
+                            <p class="mb-0" style="color: #ccc;">abhishekgujjar2200@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Phone</h5>
+                            <p class="mb-0" style="color: #ccc;">+91 7056688981</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5">
+                        <h4 class="mb-4"><i class="fas fa-share-alt me-3" style="color: #4CAF50;"></i>Follow Me</h4>
+                        <div class="d-flex">
+                            <a href="https://www.linkedin.com/in/abhishekgujjar008/" target="_blank" class="social-btn linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/abhishekpgrm" target="_blank" class="social-btn github">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle me-2"></i>Available for freelance work
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}{% endblock %}
