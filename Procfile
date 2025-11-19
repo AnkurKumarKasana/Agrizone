@@ -1,1 +1,1 @@
-web: gunicorn agrizone.wsgi --log-file -
+web: python manage.py migrate && gunicorn agrizone.wsgi --log-file -
