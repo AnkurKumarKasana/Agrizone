@@ -43,15 +43,15 @@ def get_weather_data(location):
         if not api_key:
             return None
             
-        url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={location}"
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
         response = requests.get(url, timeout=10)
         
         if response.status_code == 200:
             data = response.json()
             return {
-                'temp': data['current']['temp_c'],
-                'humidity': data['current']['humidity'],
-                'description': data['current']['condition']['text']
+                'temp': data['main']['temp'],
+                'humidity': data['main']['humidity'],
+                'description': data['weather'][0]['description']
             }
     except Exception as e:
         print(f"Weather API Error: {e}")
