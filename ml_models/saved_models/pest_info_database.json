@@ -1,0 +1,352 @@
+{
+  "rice": [
+    {
+      "pest_name": "Brown Plant Hopper",
+      "severity": "high",
+      "symptoms": "Yellowing and drying of plants, hopper burn",
+      "prevention": "Avoid excessive nitrogen. Use resistant varieties. Maintain field drainage.",
+      "treatment": "Apply imidacloprid or thiamethoxam. Drain water from fields.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        80,
+        100
+      ],
+      "favorable_rainfall": "heavy"
+    },
+    {
+      "pest_name": "Stem Borer",
+      "severity": "high",
+      "symptoms": "Dead heart in vegetative stage, white ear heads",
+      "prevention": "Early planting. Remove stubbles. Light traps.",
+      "treatment": "Apply carbofuran granules. Release Trichogramma wasps.",
+      "favorable_temp": [
+        20,
+        30
+      ],
+      "favorable_humidity": [
+        70,
+        90
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Leaf Folder",
+      "severity": "medium",
+      "symptoms": "Folded leaves with feeding marks, white streaks",
+      "prevention": "Avoid excessive nitrogen. Remove weeds.",
+      "treatment": "Spray chlorpyrifos or quinalphos when >2 folded leaves/hill.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        75,
+        95
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Blast Disease",
+      "severity": "critical",
+      "symptoms": "Diamond-shaped lesions on leaves, neck rot",
+      "prevention": "Use resistant varieties. Balanced fertilization.",
+      "treatment": "Apply tricyclazole or isoprothiolane fungicides.",
+      "favorable_temp": [
+        20,
+        28
+      ],
+      "favorable_humidity": [
+        85,
+        100
+      ],
+      "favorable_rainfall": "heavy"
+    }
+  ],
+  "wheat": [
+    {
+      "pest_name": "Aphids",
+      "severity": "medium",
+      "symptoms": "Curling leaves, honeydew on plants, stunted growth",
+      "prevention": "Early sowing. Balanced nitrogen. Natural enemies.",
+      "treatment": "Spray dimethoate or imidacloprid.",
+      "favorable_temp": [
+        15,
+        25
+      ],
+      "favorable_humidity": [
+        60,
+        80
+      ],
+      "favorable_rainfall": "light"
+    },
+    {
+      "pest_name": "Rust",
+      "severity": "high",
+      "symptoms": "Orange-brown pustules on leaves and stems",
+      "prevention": "Use resistant varieties. Timely sowing.",
+      "treatment": "Apply propiconazole or tebuconazole fungicides.",
+      "favorable_temp": [
+        15,
+        25
+      ],
+      "favorable_humidity": [
+        80,
+        100
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Termites",
+      "severity": "high",
+      "symptoms": "Wilting plants, roots damaged, hollow stems",
+      "prevention": "Deep plowing. Adequate irrigation. Remove crop residue.",
+      "treatment": "Seed treatment with chlorpyrifos. Apply fipronil to soil.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        40,
+        60
+      ],
+      "favorable_rainfall": "dry"
+    }
+  ],
+  "maize": [
+    {
+      "pest_name": "Fall Armyworm",
+      "severity": "critical",
+      "symptoms": "Holes in leaves, frass in whorl, skeletonized leaves",
+      "prevention": "Early planting. Intercropping. Pheromone traps.",
+      "treatment": "Apply spinetoram or emamectin benzoate. Release natural enemies.",
+      "favorable_temp": [
+        22,
+        32
+      ],
+      "favorable_humidity": [
+        60,
+        85
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Stem Borer",
+      "severity": "high",
+      "symptoms": "Dead heart, shot holes in leaves, broken stems",
+      "prevention": "Remove crop residues. Early sowing.",
+      "treatment": "Apply carbofuran granules in leaf whorl.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        70,
+        90
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Corn Earworm",
+      "severity": "medium",
+      "symptoms": "Feeding damage on ear tips, frass on silk",
+      "prevention": "Use Bt corn. Timely harvest.",
+      "treatment": "Apply spinosad or Bt insecticide to silks.",
+      "favorable_temp": [
+        20,
+        30
+      ],
+      "favorable_humidity": [
+        50,
+        75
+      ],
+      "favorable_rainfall": "light"
+    }
+  ],
+  "cotton": [
+    {
+      "pest_name": "Bollworm",
+      "severity": "critical",
+      "symptoms": "Bored bolls, frass, shed squares and bolls",
+      "prevention": "Use Bt cotton. Trap crops. Pheromone traps.",
+      "treatment": "Apply profenofos or emamectin benzoate sprays.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        60,
+        80
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Whitefly",
+      "severity": "high",
+      "symptoms": "Yellowing leaves, sticky honeydew, sooty mold",
+      "prevention": "Neem oil spray. Yellow sticky traps. Remove weeds.",
+      "treatment": "Apply spiromesifen or diafenthiuron.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        60,
+        80
+      ],
+      "favorable_rainfall": "light"
+    },
+    {
+      "pest_name": "Pink Bollworm",
+      "severity": "high",
+      "symptoms": "Rosetted flowers, damaged bolls, webbing inside bolls",
+      "prevention": "Early harvest. Destroy crop residue. Pheromone traps.",
+      "treatment": "Release Trichogramma. Apply quinalphos.",
+      "favorable_temp": [
+        22,
+        32
+      ],
+      "favorable_humidity": [
+        50,
+        70
+      ],
+      "favorable_rainfall": "light"
+    }
+  ],
+  "tomato": [
+    {
+      "pest_name": "Tomato Fruit Borer",
+      "severity": "high",
+      "symptoms": "Holes in fruit, frass, rotting fruit",
+      "prevention": "Pheromone traps. Neem oil spray. Crop rotation.",
+      "treatment": "Apply Bt or spinosad insecticides.",
+      "favorable_temp": [
+        20,
+        30
+      ],
+      "favorable_humidity": [
+        60,
+        80
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Leaf Miner",
+      "severity": "medium",
+      "symptoms": "Serpentine mines on leaves, reduced photosynthesis",
+      "prevention": "Yellow sticky traps. Remove infested leaves.",
+      "treatment": "Apply abamectin or cyromazine.",
+      "favorable_temp": [
+        22,
+        30
+      ],
+      "favorable_humidity": [
+        50,
+        70
+      ],
+      "favorable_rainfall": "light"
+    },
+    {
+      "pest_name": "Whitefly",
+      "severity": "high",
+      "symptoms": "Yellowing, leaf curl virus transmission, honeydew",
+      "prevention": "Reflective mulch. Sticky traps. Resistant varieties.",
+      "treatment": "Apply imidacloprid or pyriproxyfen.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        55,
+        75
+      ],
+      "favorable_rainfall": "light"
+    }
+  ],
+  "potato": [
+    {
+      "pest_name": "Late Blight",
+      "severity": "critical",
+      "symptoms": "Water-soaked lesions, white mold, tuber rot",
+      "prevention": "Resistant varieties. Avoid overhead irrigation.",
+      "treatment": "Apply metalaxyl + mancozeb. Destroy infected plants.",
+      "favorable_temp": [
+        15,
+        22
+      ],
+      "favorable_humidity": [
+        85,
+        100
+      ],
+      "favorable_rainfall": "heavy"
+    },
+    {
+      "pest_name": "Aphids",
+      "severity": "medium",
+      "symptoms": "Curled leaves, stunted growth, virus transmission",
+      "prevention": "Seed certification. Remove volunteer plants.",
+      "treatment": "Apply thiamethoxam or acetamiprid.",
+      "favorable_temp": [
+        18,
+        25
+      ],
+      "favorable_humidity": [
+        50,
+        70
+      ],
+      "favorable_rainfall": "light"
+    },
+    {
+      "pest_name": "Tuber Moth",
+      "severity": "high",
+      "symptoms": "Mining in leaves and tubers, frass",
+      "prevention": "Deep planting. Adequate earthing up. Harvest timely.",
+      "treatment": "Apply quinalphos. Storage treatment with DDVP.",
+      "favorable_temp": [
+        20,
+        30
+      ],
+      "favorable_humidity": [
+        40,
+        60
+      ],
+      "favorable_rainfall": "dry"
+    }
+  ],
+  "sugarcane": [
+    {
+      "pest_name": "Shoot Borer",
+      "severity": "high",
+      "symptoms": "Dead hearts, bore holes in shoots",
+      "prevention": "Use healthy seed sets. Remove infested shoots.",
+      "treatment": "Apply carbofuran granules. Release Trichogramma.",
+      "favorable_temp": [
+        25,
+        35
+      ],
+      "favorable_humidity": [
+        70,
+        90
+      ],
+      "favorable_rainfall": "moderate"
+    },
+    {
+      "pest_name": "Top Borer",
+      "severity": "high",
+      "symptoms": "Bunchy top appearance, dead hearts in grown cane",
+      "prevention": "Light traps. Detrashing. Remove infested canes.",
+      "treatment": "Apply monocrotophos. Release parasitoids.",
+      "favorable_temp": [
+        22,
+        30
+      ],
+      "favorable_humidity": [
+        75,
+        95
+      ],
+      "favorable_rainfall": "heavy"
+    }
+  ]
+}

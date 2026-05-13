@@ -1,0 +1,55 @@
+{
+  "best_model": "RandomForest",
+  "accuracy": 0.9954545454545455,
+  "features": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "crops": [
+    "apple",
+    "banana",
+    "blackgram",
+    "chickpea",
+    "coconut",
+    "coffee",
+    "cotton",
+    "grapes",
+    "jute",
+    "kidneybeans",
+    "lentil",
+    "maize",
+    "mango",
+    "mothbeans",
+    "mungbean",
+    "muskmelon",
+    "orange",
+    "papaya",
+    "pigeonpeas",
+    "pomegranate",
+    "rice",
+    "watermelon"
+  ],
+  "num_crops": 22,
+  "model_comparison": {
+    "RandomForest": {
+      "accuracy": 0.9954545454545455,
+      "cv_mean": 0.9918181818181818,
+      "cv_std": 0.0028101874228774874
+    },
+    "GradientBoosting": {
+      "accuracy": 0.9818181818181818,
+      "cv_mean": 0.9815151515151517,
+      "cv_std": 0.00222680885707561
+    },
+    "SVM": {
+      "accuracy": 0.9893939393939394,
+      "cv_mean": 0.99,
+      "cv_std": 0.0039042723414318644
+    }
+  }
+}

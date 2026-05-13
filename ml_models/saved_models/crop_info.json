@@ -1,0 +1,332 @@
+{
+  "apple": {
+    "display_name": "Apple",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "120-145",
+      "K": "195-205",
+      "temperature": "21-24\u00b0C",
+      "humidity": "90-95%",
+      "pH": "5.5-6.5",
+      "rainfall": "100-130 mm"
+    },
+    "season": "Rabi (January-March)",
+    "water_needs": "Moderate",
+    "growth_duration": "4-8 years"
+  },
+  "banana": {
+    "display_name": "Banana",
+    "ideal_conditions": {
+      "N": "90-110",
+      "P": "70-85",
+      "K": "45-55",
+      "temperature": "25-30\u00b0C",
+      "humidity": "75-85%",
+      "pH": "5.5-7.0",
+      "rainfall": "100-130 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "High",
+    "growth_duration": "10-15 months"
+  },
+  "blackgram": {
+    "display_name": "Blackgram",
+    "ideal_conditions": {
+      "N": "30-50",
+      "P": "55-75",
+      "K": "15-25",
+      "temperature": "25-35\u00b0C",
+      "humidity": "60-70%",
+      "pH": "6.0-8.0",
+      "rainfall": "60-70 mm"
+    },
+    "season": "Kharif (Jun-Jul)",
+    "water_needs": "Low",
+    "growth_duration": "60-90 days"
+  },
+  "chickpea": {
+    "display_name": "Chickpea",
+    "ideal_conditions": {
+      "N": "30-50",
+      "P": "55-80",
+      "K": "70-85",
+      "temperature": "15-22\u00b0C",
+      "humidity": "14-20%",
+      "pH": "6.0-8.0",
+      "rainfall": "60-90 mm"
+    },
+    "season": "Rabi (Oct-Nov)",
+    "water_needs": "Low",
+    "growth_duration": "90-120 days"
+  },
+  "coconut": {
+    "display_name": "Coconut",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "10-20",
+      "K": "25-40",
+      "temperature": "25-30\u00b0C",
+      "humidity": "90-98%",
+      "pH": "5.5-7.0",
+      "rainfall": "130-200 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "High",
+    "growth_duration": "6-10 years"
+  },
+  "coffee": {
+    "display_name": "Coffee",
+    "ideal_conditions": {
+      "N": "90-120",
+      "P": "15-30",
+      "K": "25-40",
+      "temperature": "23-28\u00b0C",
+      "humidity": "50-70%",
+      "pH": "6.0-7.0",
+      "rainfall": "140-180 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "Moderate",
+    "growth_duration": "3-4 years"
+  },
+  "cotton": {
+    "display_name": "Cotton",
+    "ideal_conditions": {
+      "N": "100-140",
+      "P": "40-70",
+      "K": "15-25",
+      "temperature": "22-30\u00b0C",
+      "humidity": "75-85%",
+      "pH": "6.0-8.0",
+      "rainfall": "60-110 mm"
+    },
+    "season": "Kharif (April-May)",
+    "water_needs": "Moderate",
+    "growth_duration": "150-180 days"
+  },
+  "grapes": {
+    "display_name": "Grapes",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "120-145",
+      "K": "195-205",
+      "temperature": "8-15\u00b0C",
+      "humidity": "78-85%",
+      "pH": "5.5-6.5",
+      "rainfall": "60-80 mm"
+    },
+    "season": "Rabi (Jan-Feb)",
+    "water_needs": "Low",
+    "growth_duration": "2-3 years"
+  },
+  "jute": {
+    "display_name": "Jute",
+    "ideal_conditions": {
+      "N": "60-100",
+      "P": "35-60",
+      "K": "35-45",
+      "temperature": "23-27\u00b0C",
+      "humidity": "78-92%",
+      "pH": "6.0-7.5",
+      "rainfall": "150-200 mm"
+    },
+    "season": "Kharif (March-May)",
+    "water_needs": "High",
+    "growth_duration": "120-150 days"
+  },
+  "kidneybeans": {
+    "display_name": "Kidneybeans",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "55-75",
+      "K": "15-25",
+      "temperature": "15-22\u00b0C",
+      "humidity": "15-25%",
+      "pH": "5.5-6.5",
+      "rainfall": "60-80 mm"
+    },
+    "season": "Rabi (Oct-Nov)",
+    "water_needs": "Low",
+    "growth_duration": "90-120 days"
+  },
+  "lentil": {
+    "display_name": "Lentil",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "55-75",
+      "K": "15-25",
+      "temperature": "18-28\u00b0C",
+      "humidity": "18-65%",
+      "pH": "6.0-8.0",
+      "rainfall": "40-50 mm"
+    },
+    "season": "Rabi (Oct-Nov)",
+    "water_needs": "Low",
+    "growth_duration": "90-120 days"
+  },
+  "maize": {
+    "display_name": "Maize",
+    "ideal_conditions": {
+      "N": "60-100",
+      "P": "35-65",
+      "K": "15-35",
+      "temperature": "18-27\u00b0C",
+      "humidity": "55-75%",
+      "pH": "5.5-7.5",
+      "rainfall": "60-110 mm"
+    },
+    "season": "Kharif (June-July)",
+    "water_needs": "Moderate",
+    "growth_duration": "80-110 days"
+  },
+  "mango": {
+    "display_name": "Mango",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "15-30",
+      "K": "25-40",
+      "temperature": "27-35\u00b0C",
+      "humidity": "45-65%",
+      "pH": "5.5-7.0",
+      "rainfall": "90-110 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "Low-Moderate",
+    "growth_duration": "5-8 years"
+  },
+  "mothbeans": {
+    "display_name": "Mothbeans",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "40-65",
+      "K": "15-25",
+      "temperature": "24-32\u00b0C",
+      "humidity": "40-65%",
+      "pH": "3.5-9.0",
+      "rainfall": "30-60 mm"
+    },
+    "season": "Kharif (Jul-Aug)",
+    "water_needs": "Very Low",
+    "growth_duration": "75-90 days"
+  },
+  "mungbean": {
+    "display_name": "Mungbean",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "40-65",
+      "K": "15-25",
+      "temperature": "27-32\u00b0C",
+      "humidity": "80-90%",
+      "pH": "6.0-7.5",
+      "rainfall": "40-55 mm"
+    },
+    "season": "Kharif/Zaid",
+    "water_needs": "Low",
+    "growth_duration": "60-90 days"
+  },
+  "muskmelon": {
+    "display_name": "Muskmelon",
+    "ideal_conditions": {
+      "N": "95-110",
+      "P": "5-15",
+      "K": "45-55",
+      "temperature": "27-32\u00b0C",
+      "humidity": "90-95%",
+      "pH": "6.0-6.8",
+      "rainfall": "20-30 mm"
+    },
+    "season": "Zaid (Feb-Mar)",
+    "water_needs": "Low",
+    "growth_duration": "80-120 days"
+  },
+  "orange": {
+    "display_name": "Orange",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "10-20",
+      "K": "5-15",
+      "temperature": "10-35\u00b0C",
+      "humidity": "90-98%",
+      "pH": "6.0-8.0",
+      "rainfall": "100-120 mm"
+    },
+    "season": "Rabi (July-August)",
+    "water_needs": "Moderate",
+    "growth_duration": "3-5 years"
+  },
+  "papaya": {
+    "display_name": "Papaya",
+    "ideal_conditions": {
+      "N": "35-60",
+      "P": "45-70",
+      "K": "45-60",
+      "temperature": "25-35\u00b0C",
+      "humidity": "90-98%",
+      "pH": "6.0-7.0",
+      "rainfall": "100-180 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "Moderate",
+    "growth_duration": "10-12 months"
+  },
+  "pigeonpeas": {
+    "display_name": "Pigeonpeas",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "55-75",
+      "K": "15-25",
+      "temperature": "18-36\u00b0C",
+      "humidity": "30-70%",
+      "pH": "4.5-8.0",
+      "rainfall": "130-170 mm"
+    },
+    "season": "Kharif (Jun-Jul)",
+    "water_needs": "Low",
+    "growth_duration": "120-180 days"
+  },
+  "pomegranate": {
+    "display_name": "Pomegranate",
+    "ideal_conditions": {
+      "N": "15-30",
+      "P": "5-15",
+      "K": "35-45",
+      "temperature": "18-24\u00b0C",
+      "humidity": "85-95%",
+      "pH": "5.5-7.5",
+      "rainfall": "100-120 mm"
+    },
+    "season": "Year-round",
+    "water_needs": "Low",
+    "growth_duration": "2-3 years"
+  },
+  "rice": {
+    "display_name": "Rice",
+    "ideal_conditions": {
+      "N": "60-100",
+      "P": "35-65",
+      "K": "35-55",
+      "temperature": "20-27\u00b0C",
+      "humidity": "80-95%",
+      "pH": "5.0-7.0",
+      "rainfall": "200-300 mm"
+    },
+    "season": "Kharif (June-July)",
+    "water_needs": "High",
+    "growth_duration": "120-150 days"
+  },
+  "watermelon": {
+    "display_name": "Watermelon",
+    "ideal_conditions": {
+      "N": "80-110",
+      "P": "5-15",
+      "K": "45-55",
+      "temperature": "24-28\u00b0C",
+      "humidity": "80-92%",
+      "pH": "6.0-6.8",
+      "rainfall": "40-60 mm"
+    },
+    "season": "Zaid (Feb-Mar)",
+    "water_needs": "Moderate",
+    "growth_duration": "80-110 days"
+  }
+}

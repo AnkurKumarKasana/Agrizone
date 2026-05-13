@@ -1,0 +1,49 @@
+{
+  "pest_model_accuracy": 0.8747731397459165,
+  "severity_model_accuracy": 0.8765880217785844,
+  "supported_crops": [
+    "rice",
+    "wheat",
+    "maize",
+    "cotton",
+    "tomato",
+    "potato",
+    "sugarcane"
+  ],
+  "features": [
+    "crop_encoded",
+    "temperature",
+    "humidity",
+    "rainfall",
+    "wind_speed",
+    "month"
+  ],
+  "num_pests": 19,
+  "pest_classes": [
+    "Aphids",
+    "Blast Disease",
+    "Bollworm",
+    "Brown Plant Hopper",
+    "Corn Earworm",
+    "Fall Armyworm",
+    "Late Blight",
+    "Leaf Folder",
+    "Leaf Miner",
+    "None",
+    "Pink Bollworm",
+    "Rust",
+    "Shoot Borer",
+    "Stem Borer",
+    "Termites",
+    "Tomato Fruit Borer",
+    "Top Borer",
+    "Tuber Moth",
+    "Whitefly"
+  ],
+  "severity_classes": [
+    "critical",
+    "high",
+    "low",
+    "medium"
+  ]
+}
