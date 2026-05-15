@@ -3,6 +3,17 @@
 import os
 import sys
 
+# ── sklearn version compatibility fix (MUST run before any model loading) ──
+try:
+    from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+    DecisionTreeClassifier.monotonic_cst = None
+    DecisionTreeRegressor.monotonic_cst = None
+    import warnings
+    warnings.filterwarnings('ignore', message='.*Trying to unpickle estimator.*')
+except Exception:
+    pass
+# ── end fix ──
+
 
 def main():
     """Run administrative tasks."""
@@ -20,5 +31,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
- 
