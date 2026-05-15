@@ -27,41 +27,6 @@ _severity_encoder = None
 _pest_info_db = None
 
 
-def _patch_sklearn_model(model):
-    """
-    Recursively patch scikit-learn models for cross-version compatibility.
-    Models trained in sklearn 1.3.x lack 'monotonic_cst' required by sklearn 1.5+.
-    """
-    from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-
-    def _patch_tree(tree_est):
-        if not hasattr(tree_est, 'monotonic_cst'):
-            tree_est.monotonic_cst = None
-        if hasattr(tree_est, 'tree_') and tree_est.tree_ is not None:
-            if not hasattr(tree_est.tree_, 'monotonic_cst'):
-                tree_est.tree_.monotonic_cst = None
-
-    tree_types = (DecisionTreeClassifier, DecisionTreeRegressor)
-
-    if hasattr(model, 'estimators_'):
-        estimators = model.estimators_
-        # GradientBoosting: 2D ndarray (n_stages, n_outputs)
-        if hasattr(estimators, 'ndim') and estimators.ndim == 2:
-            for stage in estimators:
-                for est in stage:
-                    if isinstance(est, tree_types) or hasattr(est, 'tree_'):
-                        _patch_tree(est)
-        else:
-            for est in estimators:
-                if isinstance(est, tree_types) or hasattr(est, 'tree_'):
-                    _patch_tree(est)
-
-    if isinstance(model, tree_types) or hasattr(model, 'tree_'):
-        _patch_tree(model)
-
-    return model
-
-
 def _load_models():
     """Load and cache pest prediction models."""
     global _rf_model, _gb_model, _scaler, _crop_encoder, _pest_encoder, _severity_encoder, _pest_info_db
@@ -69,29 +34,28 @@ def _load_models():
     if _rf_model is not None:
         return True
 
-    try:
-        paths = {
-            'rf': os.path.join(MODEL_DIR, 'pest_rf_model.pkl'),
-            'gb': os.path.join(MODEL_DIR, 'pest_gb_severity_model.pkl'),
-            'scaler': os.path.join(MODEL_DIR, 'pest_scaler.pkl'),
-            'crop_enc': os.path.join(MODEL_DIR, 'pest_crop_encoder.pkl'),
-            'pest_enc': os.path.join(MODEL_DIR, 'pest_name_encoder.pkl'),
-            'sev_enc': os.path.join(MODEL_DIR, 'pest_severity_encoder.pkl'),
-            'info': os.path.join(MODEL_DIR, 'pest_info_database.json'),
-        }
+    paths = {
+        'rf': os.path.join(MODEL_DIR, 'pest_rf_model.pkl'),
+        'gb': os.path.join(MODEL_DIR, 'pest_gb_severity_model.pkl'),
+        'scaler': os.path.join(MODEL_DIR, 'pest_scaler.pkl'),
+        'crop_enc': os.path.join(MODEL_DIR, 'pest_crop_encoder.pkl'),
+        'pest_enc': os.path.join(MODEL_DIR, 'pest_name_encoder.pkl'),
+        'sev_enc': os.path.join(MODEL_DIR, 'pest_severity_encoder.pkl'),
+        'info': os.path.join(MODEL_DIR, 'pest_info_database.json'),
+    }
 
+    # Attempt 1: Load existing models
+    try:
         if not os.path.exists(paths['rf']):
-            logger.warning("Pest model not found. Run train_pest_model.py first.")
-            return False
+            raise FileNotFoundError("Pest model not found")
 
         import warnings
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=UserWarning)
-
+            warnings.simplefilter("ignore")
             with open(paths['rf'], 'rb') as f:
-                _rf_model = _patch_sklearn_model(pickle.load(f))
+                _rf_model = pickle.load(f)
             with open(paths['gb'], 'rb') as f:
-                _gb_model = _patch_sklearn_model(pickle.load(f))
+                _gb_model = pickle.load(f)
             with open(paths['scaler'], 'rb') as f:
                 _scaler = pickle.load(f)
             with open(paths['crop_enc'], 'rb') as f:
@@ -111,7 +75,46 @@ def _load_models():
         return True
 
     except Exception as e:
-        logger.error("Failed to load pest models: %s", e)
+        logger.warning("Existing pest model incompatible (%s). Retraining...", e)
+        _rf_model = None
+        _gb_model = None
+
+    # Attempt 2: Retrain models with current sklearn version
+    try:
+        logger.info("Retraining pest models for sklearn compatibility...")
+        import sys
+        sys.path.insert(0, os.path.join(BASE_DIR, 'ml_models'))
+        from train_pest_model import train_pest_models
+        train_pest_models()
+
+        # Reload freshly trained models
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            with open(paths['rf'], 'rb') as f:
+                _rf_model = pickle.load(f)
+            with open(paths['gb'], 'rb') as f:
+                _gb_model = pickle.load(f)
+            with open(paths['scaler'], 'rb') as f:
+                _scaler = pickle.load(f)
+            with open(paths['crop_enc'], 'rb') as f:
+                _crop_encoder = pickle.load(f)
+            with open(paths['pest_enc'], 'rb') as f:
+                _pest_encoder = pickle.load(f)
+            with open(paths['sev_enc'], 'rb') as f:
+                _severity_encoder = pickle.load(f)
+
+        if os.path.exists(paths['info']):
+            with open(paths['info'], 'r') as f:
+                _pest_info_db = json.load(f)
+        else:
+            _pest_info_db = {}
+
+        logger.info("Pest models retrained and loaded successfully.")
+        return True
+
+    except Exception as e:
+        logger.error("Failed to retrain pest models: %s", e)
         _rf_model = None
         return False
 

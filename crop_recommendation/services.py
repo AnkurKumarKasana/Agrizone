@@ -23,45 +23,6 @@ _label_encoder = None
 _crop_info = None
 
 
-def _patch_sklearn_model(model):
-    """
-    Recursively patch scikit-learn models for cross-version compatibility.
-    Models trained in sklearn 1.3.x lack 'monotonic_cst' required by sklearn 1.5+.
-    This patches every DecisionTreeClassifier inside any ensemble.
-    """
-    import sklearn
-    from sklearn.tree import DecisionTreeClassifier
-
-    # Patch a single tree estimator
-    def _patch_tree(tree_est):
-        if not hasattr(tree_est, 'monotonic_cst'):
-            tree_est.monotonic_cst = None
-        # Also patch the internal tree_ object if present
-        if hasattr(tree_est, 'tree_') and tree_est.tree_ is not None:
-            if not hasattr(tree_est.tree_, 'monotonic_cst'):
-                tree_est.tree_.monotonic_cst = None
-
-    # RandomForestClassifier / RandomForestRegressor / BaggingClassifier etc.
-    if hasattr(model, 'estimators_'):
-        estimators = model.estimators_
-        # GradientBoosting stores estimators_ as 2D array (n_stages, n_outputs)
-        if hasattr(estimators, 'ndim') and estimators.ndim == 2:
-            for stage in estimators:
-                for est in stage:
-                    if isinstance(est, DecisionTreeClassifier) or hasattr(est, 'tree_'):
-                        _patch_tree(est)
-        else:
-            for est in estimators:
-                if isinstance(est, DecisionTreeClassifier) or hasattr(est, 'tree_'):
-                    _patch_tree(est)
-
-    # Patch the model itself if it's a single tree
-    if isinstance(model, DecisionTreeClassifier) or hasattr(model, 'tree_'):
-        _patch_tree(model)
-
-    return model
-
-
 def _load_models():
     """Load and cache ML models. Called once on first prediction."""
     global _model, _scaler, _label_encoder, _crop_info
@@ -69,26 +30,51 @@ def _load_models():
     if _model is not None:
         return True
 
+    model_path = os.path.join(MODEL_DIR, 'crop_model.pkl')
+    scaler_path = os.path.join(MODEL_DIR, 'crop_scaler.pkl')
+    encoder_path = os.path.join(MODEL_DIR, 'crop_label_encoder.pkl')
+    info_path = os.path.join(MODEL_DIR, 'crop_info.json')
+
+    # Attempt 1: Load existing models
     try:
-        model_path = os.path.join(MODEL_DIR, 'crop_model.pkl')
-        scaler_path = os.path.join(MODEL_DIR, 'crop_scaler.pkl')
-        encoder_path = os.path.join(MODEL_DIR, 'crop_label_encoder.pkl')
-        info_path = os.path.join(MODEL_DIR, 'crop_info.json')
+        if os.path.exists(model_path):
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                with open(model_path, 'rb') as f:
+                    _model = pickle.load(f)
+                with open(scaler_path, 'rb') as f:
+                    _scaler = pickle.load(f)
+                with open(encoder_path, 'rb') as f:
+                    _label_encoder = pickle.load(f)
 
-        if not os.path.exists(model_path):
-            logger.warning("Crop model not found at %s. Run train_crop_model.py first.", model_path)
-            return False
+            # Quick sanity check: can the model predict?
+            test_input = np.array([[50, 50, 50, 25, 70, 6.5, 100]])
+            _scaler.transform(test_input)
+            _model.predict(test_input if not hasattr(_scaler, 'transform') else _scaler.transform(test_input))
 
-        import warnings
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=UserWarning)
+            if os.path.exists(info_path):
+                with open(info_path, 'r') as f:
+                    _crop_info = json.load(f)
+            else:
+                _crop_info = {}
 
-            with open(model_path, 'rb') as f:
-                _model = _patch_sklearn_model(pickle.load(f))
-            with open(scaler_path, 'rb') as f:
-                _scaler = pickle.load(f)
-            with open(encoder_path, 'rb') as f:
-                _label_encoder = pickle.load(f)
+            logger.info("Crop recommendation models loaded successfully.")
+            return True
+
+    except Exception as e:
+        logger.warning("Existing crop model incompatible (%s). Retraining...", e)
+        _model = None
+        _scaler = None
+        _label_encoder = None
+
+    # Attempt 2: Retrain models with current sklearn version
+    try:
+        logger.info("Retraining crop model for sklearn compatibility...")
+        import sys
+        sys.path.insert(0, os.path.join(BASE_DIR, 'ml_models'))
+        from train_crop_model import train_and_evaluate
+        _model, _scaler, _label_encoder = train_and_evaluate()
 
         if os.path.exists(info_path):
             with open(info_path, 'r') as f:
@@ -96,11 +82,11 @@ def _load_models():
         else:
             _crop_info = {}
 
-        logger.info("Crop recommendation models loaded successfully.")
+        logger.info("Crop model retrained and loaded successfully.")
         return True
 
     except Exception as e:
-        logger.error("Failed to load crop models: %s", e)
+        logger.error("Failed to retrain crop models: %s", e)
         _model = None
         return False
 
