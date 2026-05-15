@@ -27,6 +27,41 @@ _severity_encoder = None
 _pest_info_db = None
 
 
+def _patch_sklearn_model(model):
+    """
+    Recursively patch scikit-learn models for cross-version compatibility.
+    Models trained in sklearn 1.3.x lack 'monotonic_cst' required by sklearn 1.5+.
+    """
+    from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+
+    def _patch_tree(tree_est):
+        if not hasattr(tree_est, 'monotonic_cst'):
+            tree_est.monotonic_cst = None
+        if hasattr(tree_est, 'tree_') and tree_est.tree_ is not None:
+            if not hasattr(tree_est.tree_, 'monotonic_cst'):
+                tree_est.tree_.monotonic_cst = None
+
+    tree_types = (DecisionTreeClassifier, DecisionTreeRegressor)
+
+    if hasattr(model, 'estimators_'):
+        estimators = model.estimators_
+        # GradientBoosting: 2D ndarray (n_stages, n_outputs)
+        if hasattr(estimators, 'ndim') and estimators.ndim == 2:
+            for stage in estimators:
+                for est in stage:
+                    if isinstance(est, tree_types) or hasattr(est, 'tree_'):
+                        _patch_tree(est)
+        else:
+            for est in estimators:
+                if isinstance(est, tree_types) or hasattr(est, 'tree_'):
+                    _patch_tree(est)
+
+    if isinstance(model, tree_types) or hasattr(model, 'tree_'):
+        _patch_tree(model)
+
+    return model
+
+
 def _load_models():
     """Load and cache pest prediction models."""
     global _rf_model, _gb_model, _scaler, _crop_encoder, _pest_encoder, _severity_encoder, _pest_info_db
@@ -49,18 +84,22 @@ def _load_models():
             logger.warning("Pest model not found. Run train_pest_model.py first.")
             return False
 
-        with open(paths['rf'], 'rb') as f:
-            _rf_model = pickle.load(f)
-        with open(paths['gb'], 'rb') as f:
-            _gb_model = pickle.load(f)
-        with open(paths['scaler'], 'rb') as f:
-            _scaler = pickle.load(f)
-        with open(paths['crop_enc'], 'rb') as f:
-            _crop_encoder = pickle.load(f)
-        with open(paths['pest_enc'], 'rb') as f:
-            _pest_encoder = pickle.load(f)
-        with open(paths['sev_enc'], 'rb') as f:
-            _severity_encoder = pickle.load(f)
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=UserWarning)
+
+            with open(paths['rf'], 'rb') as f:
+                _rf_model = _patch_sklearn_model(pickle.load(f))
+            with open(paths['gb'], 'rb') as f:
+                _gb_model = _patch_sklearn_model(pickle.load(f))
+            with open(paths['scaler'], 'rb') as f:
+                _scaler = pickle.load(f)
+            with open(paths['crop_enc'], 'rb') as f:
+                _crop_encoder = pickle.load(f)
+            with open(paths['pest_enc'], 'rb') as f:
+                _pest_encoder = pickle.load(f)
+            with open(paths['sev_enc'], 'rb') as f:
+                _severity_encoder = pickle.load(f)
 
         if os.path.exists(paths['info']):
             with open(paths['info'], 'r') as f:

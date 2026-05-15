@@ -23,6 +23,45 @@ _label_encoder = None
 _crop_info = None
 
 
+def _patch_sklearn_model(model):
+    """
+    Recursively patch scikit-learn models for cross-version compatibility.
+    Models trained in sklearn 1.3.x lack 'monotonic_cst' required by sklearn 1.5+.
+    This patches every DecisionTreeClassifier inside any ensemble.
+    """
+    import sklearn
+    from sklearn.tree import DecisionTreeClassifier
+
+    # Patch a single tree estimator
+    def _patch_tree(tree_est):
+        if not hasattr(tree_est, 'monotonic_cst'):
+            tree_est.monotonic_cst = None
+        # Also patch the internal tree_ object if present
+        if hasattr(tree_est, 'tree_') and tree_est.tree_ is not None:
+            if not hasattr(tree_est.tree_, 'monotonic_cst'):
+                tree_est.tree_.monotonic_cst = None
+
+    # RandomForestClassifier / RandomForestRegressor / BaggingClassifier etc.
+    if hasattr(model, 'estimators_'):
+        estimators = model.estimators_
+        # GradientBoosting stores estimators_ as 2D array (n_stages, n_outputs)
+        if hasattr(estimators, 'ndim') and estimators.ndim == 2:
+            for stage in estimators:
+                for est in stage:
+                    if isinstance(est, DecisionTreeClassifier) or hasattr(est, 'tree_'):
+                        _patch_tree(est)
+        else:
+            for est in estimators:
+                if isinstance(est, DecisionTreeClassifier) or hasattr(est, 'tree_'):
+                    _patch_tree(est)
+
+    # Patch the model itself if it's a single tree
+    if isinstance(model, DecisionTreeClassifier) or hasattr(model, 'tree_'):
+        _patch_tree(model)
+
+    return model
+
+
 def _load_models():
     """Load and cache ML models. Called once on first prediction."""
     global _model, _scaler, _label_encoder, _crop_info
@@ -40,12 +79,16 @@ def _load_models():
             logger.warning("Crop model not found at %s. Run train_crop_model.py first.", model_path)
             return False
 
-        with open(model_path, 'rb') as f:
-            _model = pickle.load(f)
-        with open(scaler_path, 'rb') as f:
-            _scaler = pickle.load(f)
-        with open(encoder_path, 'rb') as f:
-            _label_encoder = pickle.load(f)
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=UserWarning)
+
+            with open(model_path, 'rb') as f:
+                _model = _patch_sklearn_model(pickle.load(f))
+            with open(scaler_path, 'rb') as f:
+                _scaler = pickle.load(f)
+            with open(encoder_path, 'rb') as f:
+                _label_encoder = pickle.load(f)
 
         if os.path.exists(info_path):
             with open(info_path, 'r') as f:
