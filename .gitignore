@@ -45,3 +45,6 @@ media/
 # OS
 .DS_Store
 Thumbs.db
+
+# Machine Learning
+ml_models/dataset/
