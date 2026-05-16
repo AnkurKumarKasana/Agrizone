@@ -268,7 +268,7 @@ MIT License - see LICENSE file for details.
 
 For issues and questions:
 - Create an issue in the repository
-- Email: abhishekgujjar2200@gmail.com, nakulbhar7308@gmail.com
+- Email: abhishekgujjar2200@gmail.com, nakulbhar7308@gmail.com, prgm.ankur@gmail.com
 
 ## Acknowledgments
 
